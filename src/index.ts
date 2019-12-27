@@ -7,9 +7,7 @@ if (lightHandle) {
 } else {
   console.log(`⚠️  Light Phone number required.`);
   console.log(`   Please run \`npm start -- [LIGHT PHONE NUMBER]\`.`);
-  console.log(
-    `   Ensure format properly includes country code. eg. \`npm run -- +12345678\``
-  );
+  console.log(`   eg. \`npm run -- +12229997777\``);
   process.exit(1);
 }
 
@@ -26,12 +24,16 @@ imessage.listen().on("message", message => {
   }
 });
 
-function sendToLightphone(message) {
+function sendToLightphone(message: string) {
   console.log(`🚀 ${message}`);
   imessage.send(lightHandle, message);
 }
 
-function helper(trigger, message, helper) {
+function helper(
+  trigger: string,
+  message: string,
+  helper: (message: string) => Promise<string>
+) {
   if (message.toLowerCase().startsWith(trigger)) {
     const args = message.slice(trigger.length).trim();
     helper(args).then(sendToLightphone);
