@@ -1,0 +1,16 @@
+{
+  "name": "light-phone-proxy",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "start": "node src/index.js",
+    "update": "git pull origin master && npm ci",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "osa-imessage": "github:seanhealy/osa-imessage#3f4d468c520e237fdbdd1bbff5288a395922a408",
+    "wikijs": "^6.0.1"
+  }
+}
