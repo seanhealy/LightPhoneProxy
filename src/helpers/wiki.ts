@@ -1,7 +1,7 @@
-const wiki = require("wikijs").default;
+import wiki from "wikijs";
 
-module.exports = function wikiHelper(term: string) {
+export function wikiHelper(term: string) {
   return wiki()
     .find(term)
-    .then((page: any) => page.summary());
-};
+    .then(page => page.summary());
+}

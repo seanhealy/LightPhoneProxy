@@ -3,10 +3,6 @@
 LAUNCHER_PATH="`dirname \"$0\"`"
 
 echo "---"
-echo "Enter your Light Phone's number (eg. +14449999), followed by [ENTER]:"
-read NUMBER
-
-echo "---"
 echo "You password is required in order to subscribe to Message events."
 
-cd $LAUNCHER_PATH && npm start -- $NUMBER
+cd $LAUNCHER_PATH && npm start

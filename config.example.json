@@ -1,0 +1,14 @@
+{
+  "lightNumber": "+12229997777",
+  "twilio": {
+    "accountSid": "",
+    "authToken": ""
+  },
+  "numberProxies": [
+    {
+      "name": "A Friend",
+      "real": "+14441110000",
+      "proxy": "+17770001111"
+    }
+  ]
+}

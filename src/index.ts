@@ -1,20 +1,15 @@
-const imessage = require("osa-imessage");
+import imessage from "osa-imessage";
+import { wikiHelper } from "./helpers/wiki";
+import config from "../config.json";
 
-const lightHandle = process.argv[2];
+const lightHandle = config.lightNumber;
 
-if (lightHandle) {
-  console.log(`📬 Set up proxy to Light Phone at: ${lightHandle}`);
-} else {
-  console.log(`⚠️  Light Phone number required.`);
-  console.log(`   Please run \`npm start -- [LIGHT PHONE NUMBER]\`.`);
-  console.log(`   eg. \`npm run -- +12229997777\``);
-  process.exit(1);
-}
+console.log(`📬 Set up proxy to Light Phone at: ${lightHandle}`);
 
 imessage.listen().on("message", message => {
   if (message.handle === lightHandle) {
     if (!message.fromMe) {
-      helper("wiki", message.text, require("./helpers/wiki"));
+      helper("wiki", message.text, wikiHelper);
     }
   } else {
     imessage.nameForHandle(message.handle).then(name => {
