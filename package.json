@@ -4,14 +4,21 @@
   "description": "",
   "scripts": {
     "start": "ts-node src/index.ts",
+    "tunnel": "ngrok http 8888",
     "update": "git pull origin master && npm ci",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "osa-imessage": "github:seanhealy/osa-imessage#3f4d468c520e237fdbdd1bbff5288a395922a408",
+    "@types/express": "^4.17.2",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "localtunnel": "^2.0.0",
+    "ngrok": "^3.2.7",
+    "osa-imessage": "github:seanhealy/osa-imessage#0723a789e963243cf6c6dcca8b5eccea87a6face",
     "ts-node": "^8.5.4",
+    "twilio": "^3.39.1",
     "typescript": "^3.7.4",
     "wikijs": "^6.0.1"
   }
