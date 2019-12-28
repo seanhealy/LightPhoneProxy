@@ -9,6 +9,34 @@ import twilio from "twilio";
 
 const client = twilio(config.twilio.accountSid, config.twilio.authToken);
 
+async function redactedSend(to: string, from: string, text: string) {
+  const sent = await client.messages.create({
+    to,
+    from,
+    body: text
+  });
+
+  redactMessage(sent.sid);
+}
+
+function redactMessage(messageSid: string) {
+  client
+    .messages(messageSid)
+    .fetch()
+    .then(message => {
+      if (["delivered", "received"].includes(message.status)) {
+        client
+          .messages(messageSid)
+          .update({ body: "" })
+          .then(() => {})
+          .catch(err => console.error(err));
+      } else {
+        setTimeout(() => redactMessage(messageSid), 500);
+      }
+    })
+    .catch(err => console.error(err));
+}
+
 /*** Webhooks ***/
 
 import express from "express";
@@ -19,9 +47,10 @@ const port = config.port;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => res.send("Hello World!"));
+app.post("/sms", async (req, res) => {
+  res.send("<Response></Response>");
+  redactMessage(req.body.MessageSid);
 
-app.post("/sms", (req, res) => {
   if (req.body.From === config.lightNumber) {
     const proxy = config.numberProxies.find(
       proxy => proxy.proxy === req.body.To
@@ -33,8 +62,6 @@ app.post("/sms", (req, res) => {
   } else {
     console.log("👤 Unknown Sender.");
   }
-
-  res.send("<Response></Response>");
 });
 
 app.listen(port, () =>
@@ -44,6 +71,7 @@ app.listen(port, () =>
 /*** iMessage ***/
 
 import imessage from "osa-imessage";
+import { Message } from "twilio/lib/twiml/MessagingResponse";
 
 console.log(`📬 Set up proxy to Light Phone at: ${lightHandle}`);
 
@@ -57,18 +85,14 @@ imessage.listen().on("message", message => {
       );
 
       if (proxy) {
-        client.messages.create({
-          body: message.text,
-          from: proxy.proxy,
-          to: config.lightNumber
-        });
+        redactedSend(config.lightNumber, proxy.proxy, message.text);
       } else {
         imessage.nameForHandle(message.handle).then(name => {
-          client.messages.create({
-            body: `↓ ${name}: ${message.text}`,
-            from: config.controlNumber,
-            to: config.lightNumber
-          });
+          redactedSend(
+            config.lightNumber,
+            config.controlNumber,
+            `↓ ${name}: ${message.text}`
+          );
         });
       }
     }
