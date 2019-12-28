@@ -52,19 +52,25 @@ imessage.listen().on("message", message => {
     if (message.handle === lightHandle) {
       helper("wiki", message.text, wikiHelper);
     } else {
-      imessage.nameForHandle(message.handle).then(name => {
-        const proxy = config.numberProxies.find(
-          proxy => proxy.real === message.handle
-        );
+      const proxy = config.numberProxies.find(
+        proxy => proxy.real === message.handle
+      );
 
-        if (proxy) {
+      if (proxy) {
+        client.messages.create({
+          body: message.text,
+          from: proxy.proxy,
+          to: config.lightNumber
+        });
+      } else {
+        imessage.nameForHandle(message.handle).then(name => {
           client.messages.create({
-            body: message.text,
-            from: proxy.proxy,
+            body: `↓ ${name}: ${message.text}`,
+            from: config.controlNumber,
             to: config.lightNumber
           });
-        }
-      });
+        });
+      }
     }
   }
 });
