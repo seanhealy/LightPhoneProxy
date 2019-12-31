@@ -1,5 +1,7 @@
 {
   "lightNumber": "+12229997777",
+  "controlNumber": "+12229998888",
+  "port": "9999",
   "twilio": {
     "accountSid": "",
     "authToken": ""
@@ -10,5 +12,6 @@
       "real": "+14441110000",
       "proxy": "+17770001111"
     }
-  ]
+  ],
+  "ignoreMessagesFrom": ["‭+13330001111"]
 }

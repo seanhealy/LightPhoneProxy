@@ -71,7 +71,6 @@ app.listen(port, () =>
 /*** iMessage ***/
 
 import imessage from "osa-imessage";
-import { Message } from "twilio/lib/twiml/MessagingResponse";
 
 console.log(`📬 Set up proxy to Light Phone at: ${lightHandle}`);
 
@@ -83,6 +82,10 @@ imessage.listen().on("message", message => {
       const proxy = config.numberProxies.find(
         proxy => proxy.real === message.handle
       );
+
+      if (config.ignoreMessagesFrom.includes(message.handle)) {
+        return;
+      }
 
       if (proxy) {
         redactedSend(config.lightNumber, proxy.proxy, message.text);
