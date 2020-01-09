@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "localtunnel": "^2.0.0",
     "ngrok": "^3.2.7",
-    "osa-imessage": "github:seanhealy/osa-imessage#fdc0c48ac2f18b80b87c9850586a593c7af0515f",
+    "osa-imessage": "github:seanhealy/osa-imessage#9647ccac13088e337a59360f22f84a7905262e40",
     "ts-node": "^8.5.4",
     "twilio": "^3.39.1",
     "typescript": "^3.7.4",

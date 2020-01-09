@@ -2,6 +2,7 @@ import { wikiHelper } from "./helpers/wiki";
 import config from "../config.json";
 
 const lightHandle = config.lightNumber;
+const handlesService = {};
 
 /*** Twilio ***/
 
@@ -57,7 +58,7 @@ app.post("/sms", async (req, res) => {
     );
 
     if (proxy) {
-      imessage.send(proxy.real, req.body.Body);
+      imessage.send(proxy.real, req.body.Body, handlesService[proxy.real]);
     }
   } else {
     console.log("👤 Unknown Sender.");
@@ -88,6 +89,7 @@ imessage.listen().on("message", message => {
       }
 
       if (proxy) {
+        handlesService[message.handle] = message.service;
         redactedSend(config.lightNumber, proxy.proxy, message.text);
       } else {
         imessage.nameForHandle(message.handle).then(name => {
