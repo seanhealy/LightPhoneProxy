@@ -115,10 +115,10 @@ function sendToLightphone(message: string) {
 async function helper(
   trigger: string,
   message: string,
-  helper: (message: string) => Promise<string> | string
+  helper: (message: string) => Promise<string>
 ) {
   if (message.toLowerCase().startsWith(trigger)) {
     const args = message.slice(trigger.length).trim();
-    sendToLightphone(await helper(args));
+    helper(args).then(sendToLightphone);
   }
 }
