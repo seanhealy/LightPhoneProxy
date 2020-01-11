@@ -77,8 +77,8 @@ import { pingHelper } from "./helpers/ping";
 console.log(`📬 Set up proxy to Light Phone at: ${lightHandle}`);
 
 imessage.listen().on("message", message => {
-  console.log(`Message received at ${Date.now()}`);
   if (!message.fromMe) {
+    console.log(`Message received at ${Date.now()}`);
     if (message.handle === lightHandle) {
       helper("wiki", message.text, wikiHelper);
       helper("wiki", message.text, pingHelper);
