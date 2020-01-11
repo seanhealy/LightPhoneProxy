@@ -81,7 +81,7 @@ imessage.listen().on("message", message => {
     console.log(`Message received at ${Date.now()}`);
     if (message.handle === lightHandle) {
       helper("wiki", message.text, wikiHelper);
-      helper("wiki", message.text, pingHelper);
+      helper("ping", message.text, pingHelper);
     } else {
       if (config.ignoreMessagesFrom.includes(message.handle)) {
         return;
