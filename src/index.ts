@@ -1,4 +1,3 @@
-import { wikiHelper } from "./helpers/wiki";
 import config from "../config.json";
 
 const lightHandle = config.lightNumber;
@@ -72,6 +71,8 @@ app.listen(port, () =>
 /*** iMessage ***/
 
 import imessage from "osa-imessage";
+import { wikiHelper } from "./helpers/wiki";
+import { pingHelper } from "./helpers/ping";
 
 console.log(`📬 Set up proxy to Light Phone at: ${lightHandle}`);
 
@@ -79,6 +80,7 @@ imessage.listen().on("message", message => {
   if (!message.fromMe) {
     if (message.handle === lightHandle) {
       helper("wiki", message.text, wikiHelper);
+      helper("wiki", message.text, pingHelper);
     } else {
       if (config.ignoreMessagesFrom.includes(message.handle)) {
         return;
@@ -109,13 +111,13 @@ function sendToLightphone(message: string) {
   imessage.send(lightHandle, message);
 }
 
-function helper(
+async function helper(
   trigger: string,
   message: string,
-  helper: (message: string) => Promise<string>
+  helper: (message: string) => Promise<string> | string
 ) {
   if (message.toLowerCase().startsWith(trigger)) {
     const args = message.slice(trigger.length).trim();
-    helper(args).then(sendToLightphone);
+    sendToLightphone(await helper(args));
   }
 }
