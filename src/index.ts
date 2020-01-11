@@ -80,13 +80,13 @@ imessage.listen().on("message", message => {
     if (message.handle === lightHandle) {
       helper("wiki", message.text, wikiHelper);
     } else {
-      const proxy = config.numberProxies.find(
-        proxy => proxy.real === message.handle
-      );
-
       if (config.ignoreMessagesFrom.includes(message.handle)) {
         return;
       }
+
+      const proxy = config.numberProxies.find(
+        proxy => proxy.real === message.handle
+      );
 
       if (proxy) {
         handlesService[message.handle] = message.service;
