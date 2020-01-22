@@ -22,4 +22,4 @@ Twilio also currently requires the use of webhooks so you will either need to op
 
 ## Contributing
 
-Please open an issue if you have any ideas. I'd like to get this to the point where it could be a simple application.
+Please open an issue if you have any ideas. I'd like to get this to the point where it could be a simple application. I've started a few [Issues](https://github.com/seanhealy/LightPhoneProxy/issues) with things I think could be done but also, feel free to add more suggestions.
