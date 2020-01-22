@@ -18,6 +18,8 @@ You can either start it from the terminal with `npm start` or by double clicking
 
 LightPhoneProxy also currently requires a Twilio account with a _proxy_ number for each contact you wish to converse with setup in `config.json`. There is no reason why [many people couldn't share these proxy numbers](https://github.com/seanhealy/LightPhoneProxy/issues/1) so I'm planning on figuring that restriction out as with more people using it the phone number cost per user would be lower.
 
+Twilio also requires the use of webhooks so you will either need to open a port through your router or use a tool like [ngrok](https://ngrok.com).
+
 ## Contributing
 
 Please open an issue if you have any ideas. I'd like to get this to the point where it could be a simple application.
